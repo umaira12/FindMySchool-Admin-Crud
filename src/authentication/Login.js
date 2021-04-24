@@ -6,6 +6,7 @@ import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import fire from '../helpers/db';
 import {ToastContainer, toast} from 'react-toastify';
 import {ScaleLoader} from 'react-spinners';
+import { red } from '@material-ui/core/colors';
 
 const Login = (props) => {
     const classes = useStyles();
@@ -60,7 +61,7 @@ const Login = (props) => {
                         <Avatar className={classes.avatar}>
                             <LockRounded/>
                         </Avatar>
-                        <Typography component="h1" variant="h5">
+                        <Typography component="h1" variant="h5" className = {classes.signin}>
                             Sign In
                         </Typography>
                         <ValidatorForm 
@@ -155,10 +156,13 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(6),
       },
       submit: {
-          background: 'linear-gradient(45deg, #234bc6 30%, #234bc6 90%)',
+          //background: 'red',
+         background: 'linear-gradient(45deg, #234bc6 30%, #234bc6 90%)',
           margin: theme.spacing(3, 0, 2),
           color: 'white'
+          
       },
+      
       card: {
           borderBlockColor: 'red',
           marginTop: '50px',
@@ -169,6 +173,10 @@ const useStyles = makeStyles((theme) => ({
       pointer: {
           cursor: 'pointer',
           color: '234bc6'
+      },
+      signin: {
+        fontFamily: 'poppins',
+        fontWeight: 'bold',
       }
 }));
 export default Login;

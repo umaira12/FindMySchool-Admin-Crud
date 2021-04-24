@@ -67,7 +67,7 @@ const SignUp = (props) => {
                         <Avatar className={classes.avatar}>
                             <LockRounded/>
                         </Avatar>
-                        <Typography component="h1" variant="h5">
+                        <Typography component="h1" variant="h5" className = {classes.signup}>
                             Sign Up
                         </Typography>
                         <ValidatorForm 
@@ -164,6 +164,10 @@ const useStyles = makeStyles((theme) => ({
       pointer: {
           cursor: 'pointer',
           color: '234bc6'
+      },
+      signup: {
+        fontFamily: 'poppins',
+        fontWeight: 'bold',
       }
 }))
 export default SignUp;
