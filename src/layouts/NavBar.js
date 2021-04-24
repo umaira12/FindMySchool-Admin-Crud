@@ -22,12 +22,15 @@ const NavBar = (props) => {
         <div className={classes.root}>
             <AppBar position="static" className={classes.menubackgroud}>
                 <Toolbar>
-                    <Typography variant="h6" className={classes.title}>
-                         Find my School
+                    <Typography variant="h4" className={classes.title} align = "center" >
+                         Find my School Admin Panel
                     </Typography>
+                    
+                    
                     {auth && (
                     <div>
                         <IconButton
+                        align = "right"
                         aria-label="account of current user"
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
@@ -64,14 +67,16 @@ const NavBar = (props) => {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1
+        flexGrow:1
     },
     menubackgroud: {
         background: 'linear-gradient(45deg, #234bc6 30%, #234bc6 90%)',
         // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
     }, 
     title: {
-        flexGrow: 1
+        flexGrow: 1,
+        fontFamily: 'poppins',
+        fontWeight: '300',
     }
 }));
 
