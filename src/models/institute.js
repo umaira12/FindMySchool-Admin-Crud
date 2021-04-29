@@ -1,9 +1,17 @@
 class Institute {
-    constructor(id, name, contactnumber, address){
+    constructor(id, name, contactnumber, address, city , province ,category, openingtime, closingtime,image,bg){
         this.id = id;
         this.name = name;
         this.contactnumber = contactnumber;
+        this.city = city;
+        this.province = province;
         this.address = address;
+        this.category = category;
+        this.openingtime = openingtime;
+        this.closingtime = closingtime;
+        this.image = image;
+        this.bg = bg;
+        
       
     }
 }

@@ -14,7 +14,15 @@ export const getInstitutes = async () => {
                 doc.id,
                 doc.data().name,
                 doc.data().contactnumber,
+                doc.data().city,
+                doc.data().province,
                 doc.data().address,
+                doc.data().category,
+                doc.data().openingtime,
+                doc.data().closingtime,
+                doc.data().closingtime,
+                doc.data().image,
+               
             );
 
             array.push(institute);

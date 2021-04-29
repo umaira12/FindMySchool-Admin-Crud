@@ -1,25 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import {Table, TableBody, TableCell, TableRow, TableHead,
+import {
+    Table, TableBody, TableCell, TableRow, TableHead,
     TableContainer, Paper, makeStyles, Container,
-    Typography, Button, Grid, IconButton} from '@material-ui/core';
-import {AddCircle, Edit, Delete} from '@material-ui/icons';
-import {ScaleLoader} from 'react-spinners';
-import {ToastContainer, toast} from 'react-toastify';
-import {getInstitutes, addInstitute, getInstitute, updateInstitute, deleteInstitute} from '../data/instituteData';
+    Typography, Button, Grid, IconButton
+} from '@material-ui/core';
+import { AddCircle, Edit, Delete } from '@material-ui/icons';
+import { ScaleLoader } from 'react-spinners';
+import { ToastContainer, toast } from 'react-toastify';
+import { getInstitutes, addInstitute, getInstitute, updateInstitute, deleteInstitute } from '../data/instituteData';
 import InstituteDialog from './InstituteDialog';
 
 const Institute = () => {
-    const classes  = useStyles();
+    const classes = useStyles();
     const [institutes, setInstitutes] = useState([]);
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [formMode, setFormMode] = useState(true);
     const [instId, setInstId] = useState('');
     const [name, setName] = useState('');
-    const [contactnumber, setContactNumber] =  useState('');
+    const [contactnumber, setContactNumber] = useState('');
+    const [category, setCategory] = useState('');
+    const [city, setCity] = useState('');
+    const [province, setProvince] = useState('');
     const [address, setAddress] = useState('');
-  
-    const override =`
+    const [location, setLocation] = useState('');
+    const [rating, setRating] = useState('');
+    const [openingtime, setOpeningTime] = useState('');
+    const [closingtime, setClosingTime] = useState('');
+    const [image, setImage] = useState('');
+    const override = `
         display: flex;
         align-items: center;
         justify-content: center;    
@@ -34,10 +43,34 @@ const Institute = () => {
     const handleContactNumber = (event) => {
         setContactNumber(event.target.value);
     }
+    const handleCategory = (event) => {
+        setCategory(event.target.value);
+    }
+    const handleCity = (event) => {
+        setCity(event.target.value);
+    }
+    const handleProvince = (event) => {
+        setProvince(event.target.value);
+    }
     const handleAddress = (event) => {
         setAddress(event.target.value);
     }
-    const getlist = async () => { 
+    const handleLocation = (event) => {
+        setLocation(event.target.value);
+    }
+    const handleRating = (event) => {
+        setRating(event.target.value);
+    }
+    const handleOpeningTime = (event) => {
+        setOpeningTime(event.target.value);
+    }
+    const handleClosingTime = (event) => {
+        setClosingTime(event.target.value);
+    }
+    const handleImage = (event) => {
+        setImage(event.target.value);
+    }
+    const getlist = async () => {
         try {
             setLoading(true);
             const list = await getInstitutes();
@@ -49,63 +82,107 @@ const Institute = () => {
         }
     }
     const getOneInstitute = async (id) => {
-            try {
-                setFormMode(false);
-                setInstId(id);
-                const response = await getInstitute(id);
-                 setName(response.name);
-                 setContactNumber(response.contactnumber);
-                 setAddress(response.address);
-                 setOpen(true);
-            } catch (error) {
-                toast.error(error.message);
-            }
+        try {
+            setFormMode(false);
+            setInstId(id);
+            const response = await getInstitute(id);
+            setName(response.name);
+            setContactNumber(response.contactnumber);
+            setCategory(response.category);
+            setCity(response.city);
+            setProvince(response.province);
+            setAddress(response.address);
+            setLocation(response.location);
+            setRating(response.rating);
+            setOpeningTime(response.openingTime);
+            setClosingTime(response.closingTime);
+            setImage(response.image);
+            setOpen(true);
+        } catch (error) {
+            toast.error(error.message);
+        }
 
     }
     const deleteHandler = async (id) => {
-            try {
-                await deleteInstitute(id);
-                getlist();
-                toast.success('Institute Deleted Successfully');
-            } catch (error) {
-                toast.error(error.message);
-            }
+        try {
+            await deleteInstitute(id);
+            getlist();
+            toast.success('Institute Deleted Successfully');
+        } catch (error) {
+            toast.error(error.message);
+        }
     }
     const handleAdd = () => {
-            setOpen(true);
-            setFormMode(true);
-            setName('');
-            setContactNumber('');
-            setAddress(''); 
+        setOpen(true);
+        setFormMode(true);
+        setName('');
+        setContactNumber('');
+        setCategory('');
+        setCity('');
+        setProvince('');
+        setAddress('');
+        setLocation('');
+        setRating('');
+        setOpeningTime('');
+        setClosingTime('');
+        setImage('');
+
     }
 
     const addInstituteHandler = async () => {
-            try {
-                 const institute = {
-                     name,
-                     contactnumber,
-                     address,
-                 }
-                if (formMode) {
-                    await addInstitute(institute);
-                    toast.success('Institute Added Successfully');
-                    getlist();
-                    setOpen(false);
-                    setName('');
-                    setContactNumber('');
-                    setAddress(''); 
-                }else {
-                    await updateInstitute(instId, institute);
-                    toast.success('Institute Updated Successfully');
-                    getlist();
-                    setOpen(false);
-                    setName('');
-                    setContactNumber('');
-                    setAddress(''); 
-                }
-            } catch (error) {
-                toast.error(error.message);
+        try {
+            const institute = {
+                name,
+                contactnumber,
+                category,
+                city,
+                province,
+                address,
+                location,
+                rating,
+                openingtime,
+                closingtime,
+                image
             }
+            if (formMode) {
+                await addInstitute(institute);
+                toast.success('Institute Added Successfully');
+                getlist();
+                setOpen(false);
+                setName('');
+                setContactNumber('');
+                setCategory('');
+                setCity('');
+                setProvince('');
+                setAddress('');
+                setLocation('');
+                setRating('');
+                setOpeningTime('');
+                setClosingTime('');
+                setImage('');
+                
+
+
+            } else {
+                await updateInstitute(instId, institute);
+                toast.success('Institute Updated Successfully');
+                getlist();
+                setOpen(false);
+                setName('');
+                setContactNumber('');
+                setCategory('');
+                setCity('');
+                setProvince('');
+                setAddress('');
+                setLocation('');
+                setRating('');
+                setOpeningTime('');
+                setClosingTime('');
+                setImage('');
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
     }
 
     useEffect(() => {
@@ -113,22 +190,22 @@ const Institute = () => {
     }, []);
     return (
         <Container className={classes.container}>
-            <ToastContainer/>
+            <ToastContainer />
             <TableContainer component={Paper}>
                 <Grid container>
                     <Grid item xs={8}>
-                    <Typography className={classes.title} variant="h6" component="div">
-                        All Institutes
+                        <Typography className={classes.title} variant="h6" component="div">
+                            All Institutes
                     </Typography>
                     </Grid>
                     <Grid item xs={4}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleAdd}
-                        className={classes.button}
-                        startIcon={<AddCircle/>}
-                    >Add</Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleAdd}
+                            className={classes.button}
+                            startIcon={<AddCircle />}
+                        >Add</Button>
                     </Grid>
                 </Grid>
                 <Table className={classes.table}>
@@ -136,55 +213,87 @@ const Institute = () => {
                         <TableRow>
                             <TableCell className={classes.head}>Name</TableCell>
                             <TableCell className={classes.head}>Contact Number</TableCell>
+                            <TableCell className={classes.head}>Location</TableCell>
+                            <TableCell className={classes.head}>Category</TableCell>
                             <TableCell className={classes.head}>Address</TableCell>
+                            <TableCell className={classes.head}>City</TableCell>
+                            <TableCell className={classes.head}>Province</TableCell>   
+                            <TableCell className={classes.head}>Rating</TableCell>
+                            <TableCell className={classes.head}>openingTime</TableCell>
+                            <TableCell className={classes.head}>ClosingTime</TableCell>
+                            <TableCell className={classes.head}>Image</TableCell>
                             <TableCell className={classes.head}>Actions</TableCell>
+
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {institutes.length === 0 ? (
                             <TableRow>
                                 <TableCell colSpan={7}>
-                                    <ScaleLoader 
-                                     css={override}
-                                    size={150}
-                                    color={"#234bc6"}
-                                    loading={loading}/>
+                                    <ScaleLoader
+                                        css={override}
+                                        size={150}
+                                        color={"#234bc6"}
+                                        loading={loading} />
                                 </TableCell>
                             </TableRow>
                         ) : (
                             <>
-                            {institutes.map((inst) => (
-                                <TableRow key={inst.id}>
-                                  <TableCell>{inst.name} </TableCell>
-                                  <TableCell>{inst.contactnumber}</TableCell>
-                                  <TableCell>{inst.address}</TableCell>
-                                  <TableCell>
-                                    <IconButton onClick={() => getOneInstitute(inst.id)} color="primary" aria-label="update institute">
-                                            <Edit />
-                                    </IconButton>
-                                    <IconButton onClick={() => deleteHandler(inst.id)} color="primary" aria-label="delete institute">
-                                        <Delete />
-                                    </IconButton>
-                                  </TableCell>
-                              </TableRow>
-                            ))}
-                              
+                                {institutes.map((inst) => (
+                                    <TableRow key={inst.id}>
+                                        <TableCell>{inst.name} </TableCell>
+                                        <TableCell>{inst.contactnumber}</TableCell>
+                                        <TableCell>{inst.category}</TableCell>
+                                        <TableCell>{inst.city}</TableCell>
+                                        <TableCell>{inst.province}</TableCell>
+                                        <TableCell>{inst.address}</TableCell>
+                                        <TableCell>{inst.location}</TableCell>
+                                        <TableCell>{inst.rating}</TableCell>
+                                        <TableCell>{inst.openingtime}</TableCell>
+                                        <TableCell>{inst.closingtime}</TableCell>
+                                        <TableCell>{inst.image}</TableCell>
+
+                                        <TableCell>
+                                            <IconButton onClick={() => getOneInstitute(inst.id)} color="primary" aria-label="update institute">
+                                                <Edit />
+                                            </IconButton>
+                                            <IconButton onClick={() => deleteHandler(inst.id)} color="primary" aria-label="delete institute">
+                                                <Delete />
+                                            </IconButton>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+
                             </>
                         )}
-                        
+
                     </TableBody>
-                </Table>  
+                </Table>
             </TableContainer>
             <InstituteDialog
-                open={open} 
+                open={open}
                 close={handleClose}
                 formmode={formMode}
                 name={name}
                 contactnumber={contactnumber}
+                category={category}
+                city={city}
+                province={province}
                 address={address}
+                location={location}
+                rating={rating}
+                openingtime={openingtime}
+                closingtime={closingtime}
+                image={image}
+
                 changeName={handleName}
                 changecontactnumber={handleContactNumber}
                 changeAddress={handleAddress}
+                changeLocation={handleLocation}
+                changeRating={handleRating}
+                changeOpeningTime={handleOpeningTime}
+                changeClosingTime={handleClosingTime}
+                changeImage={handleImage}
                 addInstitute={addInstituteHandler}
             />
         </Container>
@@ -198,7 +307,7 @@ const useStyles = makeStyles((theme) => ({
     },
     container: {
         marginTop: '40px'
-    }, 
+    },
     title: {
         flex: '1 1 100%',
         padding: '20px'
@@ -446,10 +555,10 @@ export default Institute;
 //                                   </TableCell>
 //                               </TableRow>
 //                             ))}
-                              
+
 //                             </>
 //                         )}
-                        
+
 //                     </TableBody>
 //                 </Table>  
 //             </TableContainer>
